@@ -34,9 +34,10 @@ public class MainListener implements Listener {
         final int range = plugin.getConfig().getInt("Push-Away-Range");
         final double launchX = plugin.getConfig().getDouble("Push-Away-Launch-X");
         final double launchY = plugin.getConfig().getDouble("Push-Away-Launch-Y");
-
+        boolean found = false;
         for (Entity entity : player.getNearbyEntities(range, range, range)) {
             if (entity instanceof Player) {
+                found = true;
                 Player p = (Player) entity;
 
                 Location playerCenterLocation = player.getEyeLocation();
@@ -54,6 +55,11 @@ public class MainListener implements Listener {
 
                 p.setVelocity(throwVector);
             }
+        }
+
+        if(found) {
+            // TODO : SEND PUSH AWAY MESSAGE
+            player.sendMessage(ItemUtil.format("&7You have pushed away surrounding players!"));
         }
 
     }
