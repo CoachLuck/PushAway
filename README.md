@@ -4,7 +4,7 @@
 - /pushaway
 - /pushaway reload
 - /pushaway give
-- /pushaway give <player>
+- /pushaway give [player]
 
 ### Permissions
 ```
