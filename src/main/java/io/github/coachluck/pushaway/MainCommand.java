@@ -19,6 +19,20 @@ public class MainCommand implements CommandExecutor {
         String giveOtherMsg = plugin.getConfig().getString("Messages.Give-Other-Wand");
         if(args.length == 0) {
             // TODO Send help
+            if(sender.hasPermission("pushaway.use")) {
+
+                sender.sendMessage(ItemUtil.format("&8&m         [ &ePushAway &8]&m         "));
+                sender.sendMessage(ItemUtil.format("&e/pushaway &8- &7Shows this page. Aliases &8[&7pa, pusha, paway&8]"));
+                if(sender.hasPermission("pushaway.reload"))
+                    sender.sendMessage(ItemUtil.format("&e/pushaway reload &8- &7Reloads the plugin."));
+                if(sender.hasPermission("pushaway.givewand")) {
+                    sender.sendMessage(ItemUtil.format("&e/pushaway give &8- &7Gives you a wand."));
+                }
+                if(sender.hasPermission("pushaway.givewand.others")) {
+                    sender.sendMessage(ItemUtil.format("&e/pushaway give <player> &8- &7Gives the player a wand."));
+                }
+            }
+            return true;
         }
         if(args.length == 1) {
             if(args[0].toLowerCase().startsWith("r")) {
@@ -26,15 +40,12 @@ public class MainCommand implements CommandExecutor {
                     sender.sendMessage(ItemUtil.format(plugin.getConfig().getString("Messages.Permission")));
                     return true;
                 }
-
-                // perm message
                 plugin.reloadConfig();
                 plugin.wand = ItemUtil.getWand();
                 sender.sendMessage(ItemUtil.format("&7Push&cAway &areloaded..."));
                 return true;
             }
             if(args[0].toLowerCase().startsWith("g")) {
-                // give wand
                 if(!sender.hasPermission("pushaway.givewand")) {
                     sender.sendMessage(ItemUtil.format(plugin.getConfig().getString("Messages.Permission")));
                     return true;

@@ -10,6 +10,10 @@ commands:
     description: Default command for PushAway
     usage: /pushaway
     permission: pushaway.admin
+    aliases:
+      - pa
+      - pusha
+      - paway
 
 permissions:
   pushaway.*:
