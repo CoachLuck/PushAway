@@ -1,7 +1,6 @@
-#
-#
-#
-#
+# Range is how close players have to be to get launched
+# Launch-X is how far horizontally they get launched
+# Launch-Y is how far vertically they get launched
 Push-Away-Range: 3
 Push-Away-Launch-X: .7
 Push-Away-Launch-Y: .5
