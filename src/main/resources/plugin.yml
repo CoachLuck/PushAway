@@ -1,0 +1,34 @@
+name: PushAway
+version: ${project.version}
+main: io.github.coachluck.pushaway.PushAway
+prefix: PushAway
+authors: [CoachLuck]
+description: Keep people away from you!
+website: github.com/CoachLuck
+commands:
+  pushaway:
+    description: Default command for PushAway
+    usage: /pushaway
+    permission: pushaway.admin
+
+permissions:
+  pushaway.*:
+    children:
+      pushaway.reload: true
+      pushaway.use: true
+      pushaway.givewand: true
+      pushaway.givewand.others: true
+  pushaway.use:
+    description: Allow the player to use the wand.
+    default: op
+  pushaway.givewand:
+    description: Allow the player to give themselves a wand.
+    default: op
+  pushaway.givewand.others:
+    description: Allow the player to give anyone a wand.
+    default: op
+    children:
+      pushaway.givewand: true
+  pushaway.reload:
+    description: Reload the configuration file.
+    default: op
