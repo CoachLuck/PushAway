@@ -1,6 +1,6 @@
 /*
  *     File: MainListener.java
- *     Last Modified: 7/14/20, 4:30 AM
+ *     Last Modified: 7/19/20, 3:14 AM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -21,6 +21,7 @@
 package io.github.coachluck.pushaway;
 
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,8 +32,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
 
+import java.util.UUID;
+
 public class MainListener implements Listener {
-    PushAway plugin;
+    private final PushAway plugin;
 
     public MainListener(PushAway plugin) {
         this.plugin = plugin;
@@ -41,46 +44,85 @@ public class MainListener implements Listener {
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
         if(!e.getAction().equals(Action.RIGHT_CLICK_AIR) && !e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
-
         int slotId = e.getPlayer().getInventory().getHeldItemSlot();
+
         ItemStack heldItem = e.getPlayer().getInventory().getItem(slotId);
         if(!heldItem.getType().equals(plugin.wand.getType())) return;
+
         ItemMeta heldItemMeta = heldItem.getItemMeta();
         if(!heldItemMeta.getDisplayName().equals(plugin.wand.getItemMeta().getDisplayName())) return;
         if(!heldItemMeta.getLore().equals(plugin.wand.getItemMeta().getLore())) return;
 
         e.setCancelled(true);
-        Player player = e.getPlayer();
+        final Player player = e.getPlayer();
+        final UUID pUUID = player.getUniqueId();
+
+        if(player.hasPermission("pushaway.bypass-cooldown") && plugin.cooldowns.containsKey(pUUID)) {
+            Cooldown cooldown = plugin.cooldowns.get(pUUID);
+            player.sendMessage(ItemUtil.format(
+                    plugin.getConfig().getString("Messages.Cooldown")
+                            .replaceAll("%time%", Integer.toString(cooldown.getTimeRemaining()))
+            ));
+            return;
+        }
+
         final int range = plugin.getConfig().getInt("Push-Away-Range");
         final double launchX = plugin.getConfig().getDouble("Push-Away-Launch-X");
         final double launchY = plugin.getConfig().getDouble("Push-Away-Launch-Y");
-        boolean found = false;
+        int playerCount = 0;
+
         for (Entity entity : player.getNearbyEntities(range, range, range)) {
             if (entity instanceof Player) {
-                found = true;
+                playerCount++;
                 Player p = (Player) entity;
 
-                Location playerCenterLocation = player.getEyeLocation();
-                Location playerToThrowLocation = p.getEyeLocation();
+                final Location playerCenterLocation = player.getEyeLocation();
+                final Location playerToThrowLocation = p.getEyeLocation();
 
-                double x = playerToThrowLocation.getX() - playerCenterLocation.getX();
-                double y = playerToThrowLocation.getY() - playerCenterLocation.getY();
-                double z = playerToThrowLocation.getZ() - playerCenterLocation.getZ();
+                final double x = playerToThrowLocation.getX() - playerCenterLocation.getX();
+                final double y = playerToThrowLocation.getY() - playerCenterLocation.getY();
+                final double z = playerToThrowLocation.getZ() - playerCenterLocation.getZ();
 
-                Vector throwVector = new Vector(x, y, z);
+                final Vector throwVector = new Vector(x, y, z);
 
                 throwVector.normalize();
                 throwVector.multiply(launchX);
                 throwVector.setY(launchY);
 
                 p.setVelocity(throwVector);
+                p.sendMessage(ItemUtil.format(
+                        plugin.getConfig().getString("Messages.Pushed-By-Player")
+                            .replaceAll("%player%", player.getName())
+                ));
+
+                if(plugin.getConfig().getBoolean("Sound.When-Pushed.Enabled")) {
+                    p.playSound(p.getLocation(),
+                            Sound.valueOf(plugin.getConfig().getString("Sound.When-Pushed.Sound")),
+                            (float) plugin.getConfig().getDouble("Sound.When-Pushed.Volume"),
+                            (float) plugin.getConfig().getDouble("Sound.When-Pushed.Pitch"));
+                }
+                // TODO : Add particle effects
             }
         }
 
-        if(found) {
-            // TODO : SEND PUSH AWAY MESSAGE
-            player.sendMessage(ItemUtil.format("&7You have pushed away surrounding players!"));
+        if(playerCount > 0) {
+            if (plugin.getConfig().getBoolean("Sound.When-Pushed.Enabled")) {
+                player.playSound(player.getLocation(),
+                        Sound.valueOf(plugin.getConfig().getString("Sound.On-Push.Sound")),
+                        (float) plugin.getConfig().getDouble("Sound.On-Push.Volume"),
+                        (float) plugin.getConfig().getDouble("Sound.On-Push.Pitch"));
+            }
+
+            plugin.cooldowns.put(pUUID, new Cooldown(pUUID, plugin.getConfig().getInt("Usage-Cooldown")));
+            player.sendMessage(ItemUtil.format(
+                    plugin.getConfig().getString("Messages.Pushed-Players")
+                        .replaceAll("%num%", Integer.toString(playerCount))
+            ));
+            return;
         }
 
+        player.sendMessage(ItemUtil.format(
+                plugin.getConfig().getString("Messages.No-Players-Nearby")
+        ));
     }
 }
