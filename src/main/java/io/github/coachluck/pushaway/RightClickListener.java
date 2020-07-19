@@ -1,6 +1,6 @@
 /*
  *     File: RightClickListener.java
- *     Last Modified: 7/19/20, 6:17 PM
+ *     Last Modified: 7/19/20, 6:19 PM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -68,7 +68,6 @@ public class RightClickListener implements Listener {
         }
 
         doLaunch(player);
-        return;
     }
 
     private void doLaunch(Player player) {
@@ -98,7 +97,6 @@ public class RightClickListener implements Listener {
 
     private int launchSurroundingPlayers(Player player, List<Entity> nearbyPlayers) {
         int playerCount = 0;
-        Iterator<Entity> it = nearbyPlayers.iterator();
         for (Entity entity : nearbyPlayers) {
             if (entity instanceof Player) {
                 playerCount++;
