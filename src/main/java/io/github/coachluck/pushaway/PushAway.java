@@ -1,6 +1,6 @@
 /*
  *     File: PushAway.java
- *     Last Modified: 7/14/20, 4:30 AM
+ *     Last Modified: 7/19/20, 2:42 AM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -23,21 +23,21 @@ package io.github.coachluck.pushaway;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+import java.util.UUID;
+
 
 public final class PushAway extends JavaPlugin {
 
     public ItemStack wand;
+    public HashMap<UUID, Cooldown> cooldowns = new HashMap<>();
+
     @Override
     public void onEnable() {
-        // Plugin startup logic
         saveDefaultConfig();
-        this.getCommand("pushaway").setExecutor(new MainCommand(this));
+        getCommand("pushaway").setExecutor(new MainCommand(this));
         getServer().getPluginManager().registerEvents(new MainListener(this), this);
         wand = ItemUtil.getWand();
     }
 
-    @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
 }
