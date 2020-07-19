@@ -1,6 +1,6 @@
 /*
- *     File: PushAway.java
- *     Last Modified: 7/19/20, 2:42 AM
+ *     File: Cooldown.java
+ *     Last Modified: 7/19/20, 5:51 PM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -18,26 +18,32 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.coachluck.pushaway;
+package io.github.coachluck.pushaway.utils;
 
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
+import io.github.coachluck.pushaway.Main;
+import lombok.Getter;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.UUID;
 
+public class Cooldown {
 
-public final class PushAway extends JavaPlugin {
+    @Getter private int timeRemaining;
 
-    public ItemStack wand;
-    public HashMap<UUID, Cooldown> cooldowns = new HashMap<>();
+    public Cooldown(UUID uuid, int cooldownTime) {
+        Main plugin = Main.getPlugin(Main.class);
+        timeRemaining = cooldownTime;
 
-    @Override
-    public void onEnable() {
-        saveDefaultConfig();
-        getCommand("pushaway").setExecutor(new MainCommand(this));
-        getServer().getPluginManager().registerEvents(new MainListener(this), this);
-        wand = ItemUtil.getWand();
+        BukkitRunnable task = new BukkitRunnable() {
+            @Override
+            public void run() {
+                timeRemaining--;
+                if (timeRemaining == 0) {
+                    plugin.cooldowns.remove(uuid);
+                    cancel();
+                }
+            }
+        };
+        task.runTaskTimerAsynchronously(plugin, 5, 20);
     }
-
 }

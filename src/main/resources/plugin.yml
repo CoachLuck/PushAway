@@ -1,6 +1,6 @@
 name: PushAway
 version: ${project.version}
-main: io.github.coachluck.pushaway.PushAway
+main: io.github.coachluck.pushaway.Main
 prefix: PushAway
 authors: [CoachLuck]
 description: Keep people away from you!

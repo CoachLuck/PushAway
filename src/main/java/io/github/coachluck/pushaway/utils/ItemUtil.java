@@ -1,6 +1,6 @@
 /*
  *     File: ItemUtil.java
- *     Last Modified: 7/14/20, 4:30 AM
+ *     Last Modified: 7/19/20, 5:51 PM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -18,8 +18,9 @@
  *     along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.coachluck.pushaway;
+package io.github.coachluck.pushaway.utils;
 
+import io.github.coachluck.pushaway.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
@@ -32,7 +33,7 @@ import java.util.List;
 public class ItemUtil {
 
     public static ItemStack getWand() {
-        final PushAway plugin = PushAway.getPlugin(PushAway.class);
+        final Main plugin = Main.getPlugin(Main.class);
         final String materialName = plugin.getConfig().getString("Wand.Material");
         final Material mat = Material.getMaterial(materialName);
 

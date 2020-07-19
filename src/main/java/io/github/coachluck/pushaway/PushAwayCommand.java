@@ -1,6 +1,6 @@
 /*
- *     File: MainCommand.java
- *     Last Modified: 7/19/20, 2:19 AM
+ *     File: PushAwayCommand.java
+ *     Last Modified: 7/19/20, 5:51 PM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -20,16 +20,17 @@
 
 package io.github.coachluck.pushaway;
 
+import io.github.coachluck.pushaway.utils.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class MainCommand implements CommandExecutor {
-    private final PushAway plugin;
+public class PushAwayCommand implements CommandExecutor {
+    private final Main plugin;
 
-    public MainCommand(PushAway plugin) {
+    public PushAwayCommand(Main plugin) {
         this.plugin = plugin;
     }
 
