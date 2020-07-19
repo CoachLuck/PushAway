@@ -1,6 +1,6 @@
 /*
- *     File: RightClickListener.java
- *     Last Modified: 7/19/20, 6:19 PM
+ *     File: PushListener.java
+ *     Last Modified: 7/19/20, 6:25 PM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -36,10 +36,10 @@ import org.bukkit.util.Vector;
 import java.util.List;
 import java.util.UUID;
 
-public class RightClickListener implements Listener {
+public class PushListener implements Listener {
     private final Main plugin;
 
-    public RightClickListener(Main plugin) {
+    public PushListener(Main plugin) {
         this.plugin = plugin;
     }
 

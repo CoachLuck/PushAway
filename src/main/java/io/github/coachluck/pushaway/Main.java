@@ -1,6 +1,6 @@
 /*
  *     File: Main.java
- *     Last Modified: 7/19/20, 5:51 PM
+ *     Last Modified: 7/19/20, 6:25 PM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -38,7 +38,7 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         getCommand("pushaway").setExecutor(new PushAwayCommand(this));
-        getServer().getPluginManager().registerEvents(new RightClickListener(this), this);
+        getServer().getPluginManager().registerEvents(new PushListener(this), this);
         wand = ItemUtil.getWand();
     }
 
