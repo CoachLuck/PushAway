@@ -4,7 +4,7 @@
 - /pushaway - shows the help
 - /pushaway reload - reloads the plugin
 - /pushaway give - gives you the Push Away item
-- /pushaway give [player] - gives the player the pushaway item
+- /pushaway give [player] - gives the player the Push Away item
 
 ### Permissions
 ```
