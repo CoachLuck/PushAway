@@ -1,6 +1,6 @@
 /*
- *     File: MainListener.java
- *     Last Modified: 7/19/20, 3:14 AM
+ *     File: RightClickListener.java
+ *     Last Modified: 7/19/20, 5:53 PM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -20,6 +20,8 @@
 
 package io.github.coachluck.pushaway;
 
+import io.github.coachluck.pushaway.utils.Cooldown;
+import io.github.coachluck.pushaway.utils.ItemUtil;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -34,24 +36,24 @@ import org.bukkit.util.Vector;
 
 import java.util.UUID;
 
-public class MainListener implements Listener {
-    private final PushAway plugin;
+public class RightClickListener implements Listener {
+    private final Main plugin;
 
-    public MainListener(PushAway plugin) {
+    public RightClickListener(Main plugin) {
         this.plugin = plugin;
     }
 
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
-        if(!e.getAction().equals(Action.RIGHT_CLICK_AIR) && !e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) return;
+        if((e.getAction() != Action.RIGHT_CLICK_AIR) && (e.getAction() != Action.RIGHT_CLICK_BLOCK)) return;
         int slotId = e.getPlayer().getInventory().getHeldItemSlot();
 
         ItemStack heldItem = e.getPlayer().getInventory().getItem(slotId);
-        if(!heldItem.getType().equals(plugin.wand.getType())) return;
+        if(heldItem.getType() != plugin.wand.getType()) return;
 
         ItemMeta heldItemMeta = heldItem.getItemMeta();
-        if(!heldItemMeta.getDisplayName().equals(plugin.wand.getItemMeta().getDisplayName())) return;
-        if(!heldItemMeta.getLore().equals(plugin.wand.getItemMeta().getLore())) return;
+        if(heldItemMeta.getDisplayName() != plugin.wand.getItemMeta().getDisplayName()) return;
+        if(heldItemMeta.getLore() != plugin.wand.getItemMeta().getLore()) return;
 
         e.setCancelled(true);
         final Player player = e.getPlayer();
