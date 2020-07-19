@@ -15,6 +15,7 @@ permissions:
       pushaway.use: true
       pushaway.givewand: true
       pushaway.givewand.others: true
+      pushaway.bypass-cooldown: true
   pushaway.use:
     description: Allow the player to use the wand.
     default: op
@@ -28,5 +29,8 @@ permissions:
       pushaway.givewand: true
   pushaway.reload:
     description: Reload the configuration file.
+    default: op
+  pushaway.bypass-cooldown:
+    description: Bypass the cooldown to use the push away item.
     default: op
 ```
