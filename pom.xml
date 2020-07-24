@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~     File: pom.xml
-  ~     Last Modified: 7/19/20, 3:25 AM
+  ~     Last Modified: 7/24/20, 12:41 AM
   ~     Project: PushAway
   ~     Copyright (C) 2020 CoachL_ck
   ~
@@ -26,7 +26,7 @@
 
     <groupId>io.github.coachluck</groupId>
     <artifactId>PushAway</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>PushAway</name>

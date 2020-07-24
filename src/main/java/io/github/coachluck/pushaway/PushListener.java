@@ -1,6 +1,6 @@
 /*
  *     File: PushListener.java
- *     Last Modified: 7/19/20, 6:25 PM
+ *     Last Modified: 7/24/20, 12:41 AM
  *     Project: PushAway
  *     Copyright (C) 2020 CoachL_ck
  *
@@ -48,6 +48,7 @@ public class PushListener implements Listener {
         if((e.getAction() != Action.RIGHT_CLICK_AIR) && (e.getAction() != Action.RIGHT_CLICK_BLOCK)) return;
         final int slotId = e.getPlayer().getInventory().getHeldItemSlot();
 
+        if(e.getItem() == null) return;
         final ItemMeta heldItemMeta = e.getPlayer().getInventory().getItem(slotId).getItemMeta();
         if(!heldItemMeta.getDisplayName().equals(plugin.wand.getItemMeta().getDisplayName())) return;
         if(!heldItemMeta.getLore().equals(plugin.wand.getItemMeta().getLore())) return;
