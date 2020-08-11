@@ -36,7 +36,7 @@ permissions:
 ```
 
 ### Configuration
-```
+```Yaml
 # Range is how close players have to be to get launched
 # Launch-X is how far horizontally they get launched
 # Launch-Y is how far vertically they get launched
