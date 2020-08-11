@@ -7,7 +7,7 @@
 - /pushaway give [player] - gives the player the Push Away item
 
 ### Permissions
-```
+```Yaml
 permissions:
   pushaway.*:
     children:
